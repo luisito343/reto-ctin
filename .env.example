@@ -1,0 +1,4 @@
+DB_USER=luisnava
+DB_PASSWORD=navaGerardo117
+DB_NAME=innovacion_db
+DB_HOST=postgres
