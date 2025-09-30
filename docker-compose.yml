@@ -130,5 +130,22 @@ services:
       - db # Le dice a Docker que inicie este servicio solo después de que la BD esté lista
     restart: unless-stopped
 
+  # Servicio del API Gateway
+  gateway:
+    build: ./gateway
+    container_name: nginx_gateway
+    ports:
+      - "8080:80" # Mapea el puerto 80 del contenedor al 8080 de tu máquina
+    depends_on:
+      - create-startup-service
+      - read-startup-service
+      - update-startup-service
+      - delete-startup-service
+      - create-technology-service
+      - read-technology-service
+      - update-technology-service
+      - delete-technology-service
+    restart: unless-stopped
+
 volumes:
   postgres_data:
