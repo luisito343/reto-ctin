@@ -1,0 +1,134 @@
+services:
+  # Servicio de la Base de Datos
+  db:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    env_file:
+      - .env # Carga las variables desde el archivo .env
+    ports:
+      - "5432:5432" # Expone el puerto de la BD a tu máquina (opcional, para depurar)
+    volumes:
+      - ./db/migrations/init.sql:/docker-entrypoint-initdb.d/init.sql # Ejecuta el script de creación de tablas
+      - postgres_data:/var/lib/postgresql/data # Guarda los datos de forma persistente
+    restart: unless-stopped
+
+  # Servicio para Crear Startups
+  create-startup-service:
+    build: ./services/startups/create # Le dice a Docker que construya la imagen desde el Dockerfile en esta carpeta
+    container_name: create_startup_service
+    env_file:
+      - .env # Carga las mismas variables de entorno
+    ports:
+      - "5001:3000" # Mapea el puerto 3000 del contenedor al 5001 de tu máquina
+    volumes:
+      - ./services/startups/create:/usr/src/app  # Sincroniza el código
+      - /usr/src/app/node_modules 
+    depends_on:
+      - db # Le dice a Docker que inicie este servicio solo después de que la BD esté lista
+    restart: unless-stopped
+  # Servicio para Leer Startups
+  read-startup-service:
+    build: ./services/startups/read # Le dice a Docker que construya la imagen desde el Dockerfile en esta carpeta
+    container_name: read_startup_service
+    env_file:
+      - .env # Carga las mismas variables de entorno
+    ports:
+      - "5002:3000" # Mapea el puerto 3000 del contenedor al 5002 de tu máquina
+    volumes:
+      - ./services/startups/read:/usr/src/app  # Sincroniza el código
+      - /usr/src/app/node_modules 
+    depends_on:
+      - db # Le dice a Docker que inicie este servicio solo después de que la BD esté lista
+    restart: unless-stopped
+  # Servicio para Actualizar Startups
+  update-startup-service:
+    build: ./services/startups/update # Le dice a Docker que construya la imagen desde el Dockerfile en esta carpeta
+    container_name: update_startup_service
+    env_file:
+      - .env # Carga las mismas variables de entorno
+    ports:
+      - "5003:3000" # Mapea el puerto 3000 del contenedor al 5003 de tu máquina
+    volumes:
+      - ./services/startups/update:/usr/src/app  # Sincroniza el código
+      - /usr/src/app/node_modules 
+    depends_on:
+      - db # Le dice a Docker que inicie este servicio solo después de que la BD esté lista
+    restart: unless-stopped
+
+  # Servicio para Eliminar Startups
+  delete-startup-service:
+    build: ./services/startups/delete # Le dice a Docker que construya la imagen desde el Dockerfile en esta carpeta
+    container_name: delete_startup_service
+    env_file:
+      - .env # Carga las mismas variables de entorno
+    ports:
+      - "5004:3000" # Mapea el puerto 3000 del contenedor al 5004 de tu máquina
+    volumes:
+      - ./services/startups/delete:/usr/src/app  # Sincroniza el código
+      - /usr/src/app/node_modules 
+    depends_on:
+      - db # Le dice a Docker que inicie este servicio solo después de que la BD esté lista
+    restart: unless-stopped
+
+  # Servicio para Crear Technologies
+  create-technology-service:
+    build: ./services/technologies/create # Le dice a Docker que construya la imagen desde el Dockerfile en esta carpeta
+    container_name: create_technologie_service
+    env_file:
+      - .env # Carga las mismas variables de entorno
+    ports:
+      - "5005:3000" # Mapea el puerto 3000 del contenedor al 5005 de tu máquina
+    volumes:
+      - ./services/technologies/create:/usr/src/app  # Sincroniza el código
+      - /usr/src/app/node_modules 
+    depends_on:
+      - db # Le dice a Docker que inicie este servicio solo después de que la BD esté lista
+    restart: unless-stopped
+
+  # Servicio para Leer Technologies
+  read-technology-service:
+    build: ./services/technologies/read # Le dice a Docker que construya la imagen desde el Dockerfile en esta carpeta
+    container_name: read_technologie_service
+    env_file:
+      - .env # Carga las mismas variables de entorno
+    ports:
+      - "5006:3000" # Mapea el puerto 3000 del contenedor al 5006 de tu máquina
+    volumes:
+      - ./services/technologies/read:/usr/src/app  # Sincroniza el código
+      - /usr/src/app/node_modules 
+    depends_on:
+      - db # Le dice a Docker que inicie este servicio solo después de que la BD esté lista
+    restart: unless-stopped
+
+  # Servicio para Actualizar Technologies
+  update-technology-service:
+    build: ./services/technologies/update # Le dice a Docker que construya la imagen desde el Dockerfile en esta carpeta
+    container_name: update_technologie_service
+    env_file:
+      - .env # Carga las mismas variables de entorno
+    ports:
+      - "5007:3000" # Mapea el puerto 3000 del contenedor al 5007 de tu máquina
+    volumes:
+      - ./services/technologies/update:/usr/src/app  # Sincroniza el código
+      - /usr/src/app/node_modules 
+    depends_on:
+      - db # Le dice a Docker que inicie este servicio solo después de que la BD esté lista
+    restart: unless-stopped
+
+  # Servicio para Eliminar Technologies
+  delete-technology-service:
+    build: ./services/technologies/delete # Le dice a Docker que construya la imagen desde el Dockerfile en esta carpeta
+    container_name: delete_technologie_service
+    env_file:
+      - .env # Carga las mismas variables de entorno
+    ports:
+      - "5008:3000" # Mapea el puerto 3000 del contenedor al 5008 de tu máquina
+    volumes:
+      - ./services/technologies/delete:/usr/src/app  # Sincroniza el código
+      - /usr/src/app/node_modules
+    depends_on:
+      - db # Le dice a Docker que inicie este servicio solo después de que la BD esté lista
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
