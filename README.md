@@ -105,27 +105,27 @@ Se realiza una petición `POST` a `/v1/api/technologies/create` con un cuerpo JS
 ![Texto alternativo](./docs/images/postman/CreateTechnology.png)
 ### Leemos las tecnologías
 Se realiza una petición `GET` a `/v1/api/technologies/read` para obtener una lista de todas las tecnologías. Se espera una respuesta `200 OK` con una lista de todas las tecnologías.
-![Texto alternativo](./docs/images/postman/ReadTechnologies.png)
+![Texto alternativo](/docs/images/postman/ReadTechnologies.png)
 ### Leemos las tecnologias por filtro
 Se realiza una petición `GET` a `/v1/api/technologies/read?adoptionLevel=Innovators` para obtener una lista de tecnologías que coincidan con el filtro especificado. Se espera una respuesta `200 OK` con una lista de tecnologías que coincidan con el filtro.
-![Texto alternativo](./docs/images/postman/ReadTechnologiesWithFilters.png)
+![Texto alternativo](/docs/images/postman/ReadTechnologiesWithFilters.png)
 ### Actualizamos una tecnología
 Se realiza una petición `PUT` a `/v1/api/technologies/update/:id` con un cuerpo JSON válido para actualizar una tecnología existente. Se espera una respuesta `200 OK` con los datos de la tecnología actualizada.
-![Texto alternativo](./docs/images/postman/UpdateTechnology.png)
+![Texto alternativo](/docs/images/postman/UpdateTechnology.png)
 ### Eliminamos una tecnología
 Se realiza una petición `DELETE` a `/v1/api/technologies/delete/:id` para eliminar una tecnología existente. Se espera una respuesta `200 OK` con un mensaje de éxito.
-![Texto alternativo](./docs/images/postman/DeleteTechnology.png)
+![Texto alternativo](/docs/images/postman/DeleteTechnology.png)
 
 ## 8. Capturas de Pantalla
 
 ### Escritorio (Desktop)
-![Vista de escritorio de la aplicación](./docs/images/FrontEnd/desktop.png)
+![Vista de escritorio de la aplicación](/docs/images/FrontEnd/desktop.png)
 
 ### Tablet
-![Vista de tablet de la aplicación](./docs/images/FrontEnd/tablet.png)
+![Vista de tablet de la aplicación](/docs/images/FrontEnd/tablet.png)
 
 ### Móvil (Smartphone)
-![Vista de móvil de la aplicación](./docs/images/FrontEnd/mobile.png)
+![Vista de móvil de la aplicación](/docs/images/FrontEnd/mobile.png)
 
 ### 9. Limitaciones y Siguientes Pasos
 ### Limitaciones Actuales:
