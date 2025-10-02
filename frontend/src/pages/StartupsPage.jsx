@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import apiClient from '../services/api'
 import StartupForm from '../components/StartupForm';
-import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
-import { PlusLg } from 'react-bootstrap-icons';
+import LoadingPage from '../components/LoadingPage';
+import { Container, Form, Button, Card, Row, Col, Alert } from 'react-bootstrap';
+import { PlusLg, ExclamationTriangleFill } from 'react-bootstrap-icons';
 
 export default function StarupsPage() {
     const [startups, setStartups] = useState([]);
@@ -108,8 +109,23 @@ export default function StarupsPage() {
         maximumFractionDigits: 0,
     });
 
-    if (loading) return <div>Cargando startups...</div>;
-    if (error) return <div>{error}</div>;
+    if (loading) {
+        return (
+            <LoadingPage page={"Startups"}/>
+        );
+    }
+
+    if (error) {
+        return (
+            <Alert variant="danger" className="d-flex align-items-center">
+                <ExclamationTriangleFill size={24} className="me-3" />
+                <div>
+                    <Alert.Heading as="h5" className="mb-1">Error al cargar los datos</Alert.Heading>
+                    <p className="mb-0">{error}</p>
+                </div>
+            </Alert>
+        );
+    }
 
     return (
         <div>
@@ -129,21 +145,12 @@ export default function StarupsPage() {
                     </Col>
                 </Row>
                 <div ref={formContainerRef} >
-                    {showForm && (
+                    {(showForm || editingStartup) && (
                         <div className="mb-4" >
                             <StartupForm
-                                onSubmit={handleCreateStartup}
+                                onSubmit={editingStartup ? handleUpdateStartup : handleCreateStartup}
                                 onCancel={handleCancel}
-                            />
-                        </div>
-                    )}
-
-                    {editingStartup && (
-                        <div className="mb-4">
-                            <StartupForm
                                 initialData={editingStartup}
-                                onSubmit={handleUpdateStartup}
-                                onCancel={handleCancel}
                             />
                         </div>
                     )}
@@ -191,9 +198,7 @@ export default function StarupsPage() {
                 )}
             </Container>
 
-            {loading ? (
-                <div>Cargando...</div>
-            ) : (
+            {startups.length > 0 ? (
                 <Row className='m-4'>
                     {startups.map(startup => (
                         <Col xs={12} md={6} lg={4} key={startup.id} className="mb-4">
@@ -222,6 +227,13 @@ export default function StarupsPage() {
                         </Col>
                     ))}
                 </Row>
+            ) : (
+                <Col xs={12}>
+                        <div className="text-center p-5 bg-light rounded">
+                            <h4>No se encontraron Starups</h4>
+                            <p>Intenta ajustar los filtros o crea una nueva Startup.</p>
+                        </div>
+                    </Col>
             )}
         </div>
     )

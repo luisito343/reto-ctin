@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import apiClient from '../services/api'
 import TechnologyForm from '../components/TechnologyForm';
+import LoadingPage from '../components/LoadingPage';
+import ErrorPage from '../components/ErrorPage';
 import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
 import { PlusLg } from 'react-bootstrap-icons';
 
@@ -102,8 +104,17 @@ export default function TechnologiesPage() {
         fetchTechnologies();
     };
 
-    if (loading) return <div>Cargando technologias...</div>;
-    if (error) return <div>{error}</div>;
+    if (loading) {
+        return (
+            <LoadingPage page="tecnologías" />
+        );
+    }
+
+    if (error) {
+        return (
+            <ErrorPage error={error} />
+        );
+    }
 
     return (
         <div>
@@ -124,21 +135,13 @@ export default function TechnologiesPage() {
                 </Row>
 
                 <div ref={formContainerRef}>
-                    {showForm && (
-                        <div className="mb-4">
+                    {(showForm || editingTechnology) && (
+                        <div className="mb-4" ref={formContainerRef}>
                             <TechnologyForm
-                                onSubmit={handleCreateTechnology}
+                                // Decide qué función de submit usar
+                                onSubmit={editingTechnology ? handleUpdateTechnology : handleCreateTechnology}
                                 onCancel={handleCancel}
-                                initialData={editingTechnology}
-                            />
-                        </div>
-                    )}
-
-                    {editingTechnology && (
-                        <div className="mb-4">
-                            <TechnologyForm
-                                onSubmit={handleUpdateTechnology}
-                                onCancel={handleCancel}
+                                // Pasa los datos de edición o un objeto vacío (o nada)
                                 initialData={editingTechnology}
                             />
                         </div>
@@ -186,11 +189,9 @@ export default function TechnologiesPage() {
                     </Card>
                 )}
             </Container>
-            {loading ? (
-                <div>Cargando...</div>
-            ) : (
-                <Row className='m-4 '>
-                    {technologies.map(technology => (
+            <Row className='m-4 '>
+                {technologies.length > 0 ? (
+                    technologies.map(technology => (
                         <Col xs={12} md={6} lg={4} key={technology.id} className="mb-4">
                             <Card style={{ width: '100%' }} key={technology.id}>
                                 <Card.Body>
@@ -200,13 +201,13 @@ export default function TechnologiesPage() {
                                         <strong>Descripción:</strong> {technology.description} <br />
                                         <strong>Nivel de adopción:</strong> {technology.adoptionlevel}
                                     </Card.Text>
-                                    <Button 
-                                    variant="secondary" 
-                                    size="sm" 
-                                    onClick={() => {
-                                        setEditingTechnology(technology);
-                                        setTimeout(() => formContainerRef.current?.scrollIntoView({ behavior: 'smooth' }), 0);
-                                    }}>
+                                    <Button
+                                        variant="secondary"
+                                        size="sm"
+                                        onClick={() => {
+                                            setEditingTechnology(technology);
+                                            setTimeout(() => formContainerRef.current?.scrollIntoView({ behavior: 'smooth' }), 0);
+                                        }}>
                                         Editar
                                     </Button>
                                     <Button variant="danger" size="sm" onClick={() => handleDeleteTechnology(technology.id)} style={{ marginLeft: '10px' }}>
@@ -215,9 +216,15 @@ export default function TechnologiesPage() {
                                 </Card.Body>
                             </Card>
                         </Col>
-                    ))}
-                </Row>
-            )}
+                    ))) : (
+                    <Col xs={12}>
+                        <div className="text-center p-5 bg-light rounded">
+                            <h4>No se encontraron tecnologías</h4>
+                            <p>Intenta ajustar los filtros o crea una nueva tecnología.</p>
+                        </div>
+                    </Col>
+                )}
+            </Row>
         </div>
     )
 }

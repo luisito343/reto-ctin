@@ -87,6 +87,9 @@ El API Gateway (para probar con Postman) estará en http://localhost:8080.
 ### Crear una Startup
 Se realiza una petición `POST` a `/v1/api/startups/create` con un cuerpo JSON válido. Se espera una respuesta `201 Created` con los datos de la nueva startup
 ![Texto alternativo](./docs/images/postman/CreateStartUp.png)
+### Crear Startup pero con un dato faltante
+Se realiza una petición `POST` a `/v1/api/startups/create` con un cuerpo JSON que falta un dato. Se espera una respuesta `400 Bad Request` con un mensaje de error.
+![Texto alternativo](./docs/images/postman/CreateStartUpError400.png)
 ### Leer Startups
 Se realiza una petición `GET` a `/v1/api/startups/read`. Se espera una respuesta `200 OK` con una lista de todas las startups.
 ![Texto alternativo](./docs/images/postman/ReadStartUps.png)
@@ -99,9 +102,13 @@ Se realiza una petición `PUT` a `/v1/api/startups/update/:id` con un cuerpo JSO
 ### Eliminamos una startup
 Se realiza una petición `DELETE` a `/v1/api/startups/delete/:id` para eliminar una startup existente. Se espera una respuesta `200 OK` con un mensaje de éxito.
 ![Texto alternativo](./docs/images/postman/DeleteStartUp.png)
+### Eliminar Startup inexistente
+![Texto alternativo](./docs/images/postman/DeleteStartUpError404.png)
 ### Creamos una tecnología
 Se realiza una petición `POST` a `/v1/api/technologies/create` con un cuerpo JSON válido para crear una nueva tecnología. Se espera una respuesta `201 Created` con los datos de la nueva tecnología.
 ![Texto alternativo](./docs/images/postman/CreateTechnology.png)
+### Creamos una tecnología pero con un dato faltante
+![Texto alternativo](./docs/images/postman/CreateTechnologyError400.png)
 ### Leemos las tecnologías
 Se realiza una petición `GET` a `/v1/api/technologies/read` para obtener una lista de todas las tecnologías. Se espera una respuesta `200 OK` con una lista de todas las tecnologías.
 ![Texto alternativo](./docs/images/postman/ReadTechnologies.png)
@@ -114,6 +121,8 @@ Se realiza una petición `PUT` a `/v1/api/technologies/update/:id` con un cuerpo
 ### Eliminamos una tecnología
 Se realiza una petición `DELETE` a `/v1/api/technologies/delete/:id` para eliminar una tecnología existente. Se espera una respuesta `200 OK` con un mensaje de éxito.
 ![Texto alternativo](./docs/images/postman/DeleteTechnology.png)
+### Eliminamos una tecnologia con ID inexistente
+![Texto alternativo](./docs/images/postman/DeleteTechnologyError404.png)
 
 ## 8. Capturas de Pantalla
 
