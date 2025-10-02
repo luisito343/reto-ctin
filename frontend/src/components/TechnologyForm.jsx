@@ -73,7 +73,8 @@ function TechnologyForm({ onSubmit, onCancel, initialData }) {
                                     <Form.Group as={Col} xs="12" controlId="formGridLocation">
                                         <Form.Label>Descripción:</Form.Label>
                                         <Form.Control 
-                                            type="text" 
+                                            as={"textarea"} 
+                                            rows={3}
                                             name="description" 
                                             value={formData.description} 
                                             onChange={handleChange} 

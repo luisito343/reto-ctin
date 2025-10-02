@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import apiClient from '../services/api'
 import TechnologyForm from '../components/TechnologyForm';
 import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
@@ -10,6 +10,8 @@ export default function TechnologiesPage() {
     const [error, setError] = useState(null);
     const [showForm, setShowForm] = useState(false);
     const [editingTechnology, setEditingTechnology] = useState(null);
+    const formContainerRef = useRef(null);
+
 
     const [filters, setFilters] = useState({ sector: '', adoptionLevel: '' });
 
@@ -121,25 +123,27 @@ export default function TechnologiesPage() {
                     </Col>
                 </Row>
 
-                {showForm && (
-                    <div className="mb-4">
-                        <TechnologyForm
-                            onSubmit={handleCreateTechnology}
-                            onCancel={handleCancel}
-                            initialData={editingTechnology}
-                        />
-                    </div>
-                )}
+                <div ref={formContainerRef}>
+                    {showForm && (
+                        <div className="mb-4">
+                            <TechnologyForm
+                                onSubmit={handleCreateTechnology}
+                                onCancel={handleCancel}
+                                initialData={editingTechnology}
+                            />
+                        </div>
+                    )}
 
-                {editingTechnology && (
-                    <div className="mb-4">
-                        <TechnologyForm
-                            onSubmit={handleUpdateTechnology}
-                            onCancel={handleCancel}
-                            initialData={editingTechnology}
-                        />
-                    </div>
-                )}
+                    {editingTechnology && (
+                        <div className="mb-4">
+                            <TechnologyForm
+                                onSubmit={handleUpdateTechnology}
+                                onCancel={handleCancel}
+                                initialData={editingTechnology}
+                            />
+                        </div>
+                    )}
+                </div>
 
                 {!showForm && !editingTechnology && (
                     <Card className="bg-light border-0">
@@ -196,7 +200,13 @@ export default function TechnologiesPage() {
                                         <strong>Descripción:</strong> {technology.description} <br />
                                         <strong>Nivel de adopción:</strong> {technology.adoptionlevel}
                                     </Card.Text>
-                                    <Button variant="secondary" size="sm" onClick={() => setEditingTechnology(technology)}>
+                                    <Button 
+                                    variant="secondary" 
+                                    size="sm" 
+                                    onClick={() => {
+                                        setEditingTechnology(technology);
+                                        setTimeout(() => formContainerRef.current?.scrollIntoView({ behavior: 'smooth' }), 0);
+                                    }}>
                                         Editar
                                     </Button>
                                     <Button variant="danger" size="sm" onClick={() => handleDeleteTechnology(technology.id)} style={{ marginLeft: '10px' }}>

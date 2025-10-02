@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import apiClient from '../services/api'
 import StartupForm from '../components/StartupForm';
 import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
@@ -10,6 +10,7 @@ export default function StarupsPage() {
     const [error, setError] = useState(null);
     const [showForm, setShowForm] = useState(false);
     const [editingStartup, setEditingStartup] = useState(null);
+    const formContainerRef = useRef(null);
 
     const [filters, setFilters] = useState({ name: '', category: '' });
 
@@ -127,25 +128,26 @@ export default function StarupsPage() {
                         )}
                     </Col>
                 </Row>
+                <div ref={formContainerRef} >
+                    {showForm && (
+                        <div className="mb-4" >
+                            <StartupForm
+                                onSubmit={handleCreateStartup}
+                                onCancel={handleCancel}
+                            />
+                        </div>
+                    )}
 
-                {showForm && (
-                    <div className="mb-4">
-                        <StartupForm
-                            onSubmit={handleCreateStartup}
-                            onCancel={handleCancel}
-                        />
-                    </div>
-                )}
-
-                {editingStartup && (
-                    <div className="mb-4">
-                        <StartupForm
-                            initialData={editingStartup}
-                            onSubmit={handleUpdateStartup}
-                            onCancel={handleCancel}
-                        />
-                    </div>
-                )}
+                    {editingStartup && (
+                        <div className="mb-4">
+                            <StartupForm
+                                initialData={editingStartup}
+                                onSubmit={handleUpdateStartup}
+                                onCancel={handleCancel}
+                            />
+                        </div>
+                    )}
+                </div>
 
                 {!showForm && !editingStartup && (
                     <Card className="bg-light border-0">
@@ -204,7 +206,12 @@ export default function StarupsPage() {
                                         <strong>Fecha de Fundación:</strong> {new Date(startup.foundedat).toLocaleDateString()} <br />
                                         <strong>Inversión Recibida:</strong> ${currencyFormatter.format(startup.fundingamount)}
                                     </Card.Text>
-                                    <Button variant="secondary" size="sm" onClick={() => setEditingStartup(startup)}>
+                                    <Button
+                                        variant="secondary"
+                                        size="sm" onClick={() => {
+                                            setEditingStartup(startup);
+                                            setTimeout(() => formContainerRef.current?.scrollIntoView({ behavior: 'smooth' }), 0);
+                                        }}>
                                         Editar
                                     </Button>
                                     <Button variant="danger" size="sm" className="ms-2" onClick={() => handleDeleteStartup(startup.id)}>
