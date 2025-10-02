@@ -5,6 +5,7 @@ import App from './App.jsx';
 import StartupsPage from './pages/StartupsPage.jsx';
 import TechnologiesPage from './pages/TechnologiesPage.jsx';
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Definimos las rutas de la aplicación
 const router = createBrowserRouter([

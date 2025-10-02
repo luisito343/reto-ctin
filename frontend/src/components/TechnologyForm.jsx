@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 
 // El componente recibe una función 'onSubmit' y un 'onCancel' desde el padre
 function TechnologyForm({ onSubmit, onCancel, initialData }) {
@@ -37,27 +38,74 @@ function TechnologyForm({ onSubmit, onCancel, initialData }) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h3>{initialData ? 'Editar Tecnologia' : 'Nueva Tecnologia'}</h3>
-            <div>
-                <label>Nombre:</label>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-            </div>
-            <div>
-                <label>Sector:</label>
-                <input type="text" name="sector" value={formData.sector} onChange={handleChange} required />
-            </div>
-            <div>
-                <label>Descripción:</label>
-                <input type="text" name="description" value={formData.description} onChange={handleChange} required />
-            </div>
-            <div>
-                <label>Nivel de adopción:</label>
-                <input type="text" name="adoptionLevel" value={formData.adoptionLevel} onChange={handleChange} required />
-            </div>
-            <button type="submit">Guardar</button>
-            <button type="button" onClick={onCancel}>Cancelar</button>
-        </form>
+        <Container className="my-5"> 
+            <Row className="justify-content-center">
+                <Col lg={8} md={10}>
+                    <Card className="shadow-sm">
+                        <Card.Body className="p-4">
+                            <Card.Title as="h3" className="mb-4">
+                                {initialData ? 'Editar Technology' : 'Nueva Technology'}
+                            </Card.Title>
+                            <Form onSubmit={handleSubmit}>
+                                <Row className="g-3">
+                                    <Form.Group as={Col} md="6" controlId="formGridName">
+                                        <Form.Label>Nombre:</Form.Label>
+                                        <Form.Control 
+                                            type="text" 
+                                            name="name" 
+                                            value={formData.name} 
+                                            onChange={handleChange} 
+                                            required 
+                                        />
+                                    </Form.Group>
+
+                                    <Form.Group as={Col} md="6" controlId="formGridSector">
+                                        <Form.Label>Sector:</Form.Label>
+                                        <Form.Control 
+                                            type="text" 
+                                            name="sector" 
+                                            value={formData.sector} 
+                                            onChange={handleChange} 
+                                            required 
+                                        />
+                                    </Form.Group>
+
+                                    <Form.Group as={Col} xs="12" controlId="formGridLocation">
+                                        <Form.Label>Descripción:</Form.Label>
+                                        <Form.Control 
+                                            type="text" 
+                                            name="description" 
+                                            value={formData.description} 
+                                            onChange={handleChange} 
+                                            required 
+                                        />
+                                    </Form.Group>
+
+                                    <Form.Group as={Col} md="6" controlId="formGridCategory">
+                                        <Form.Label>Nivel de Adopción:</Form.Label>
+                                        <Form.Control 
+                                            type="text" 
+                                            name="adoptionLevel" 
+                                            value={formData.adoptionLevel} 
+                                            onChange={handleChange} 
+                                            required 
+                                        />
+                                    </Form.Group>
+                                </Row>
+                                <div className="mt-4">
+                                    <Button variant="primary" type="submit" className="me-2">
+                                        {initialData ? 'Actualizar' : 'Crear'}
+                                    </Button>
+                                    <Button variant="secondary" onClick={onCancel}>
+                                        Cancelar
+                                    </Button>
+                                </div>
+                            </Form>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
     );
 }
 

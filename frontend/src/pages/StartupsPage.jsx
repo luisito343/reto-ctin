@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import apiClient from '../services/api'
 import StartupForm from '../components/StartupForm';
+import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
+import { PlusLg } from 'react-bootstrap-icons';
 
 export default function StarupsPage() {
     const [startups, setStartups] = useState([]);
@@ -98,73 +100,121 @@ export default function StarupsPage() {
         fetchStartups();
     };
 
+    const currencyFormatter = new Intl.NumberFormat('es-MX', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+    });
+
     if (loading) return <div>Cargando startups...</div>;
     if (error) return <div>{error}</div>;
 
     return (
         <div>
-            <h1>Lista de Startups</h1>
-            {!showForm && (
-                <button onClick={() => setShowForm(true)}>
-                    Crear Nueva Startup
-                </button>
-            )}
+            <Container className="py-4">
+                <Row className="align-items-center mb-4">
+                    <Col>
+                        <h1 className="mb-0">Lista de Startups</h1>
+                    </Col>
+                    <Col xs="auto">
+                        {/* Solo mostramos el botón si no hay un formulario activo */}
+                        {!showForm && !editingStartup && (
+                            <Button variant="primary" onClick={() => setShowForm(true)}>
+                                <PlusLg size={20} className="me-2" />
+                                Crear Nueva Startup
+                            </Button>
+                        )}
+                    </Col>
+                </Row>
 
-            {showForm && (
-                <StartupForm
-                    onSubmit={handleCreateStartup}
-                    onCancel={handleCancel}
-                />
-            )}
+                {showForm && (
+                    <div className="mb-4">
+                        <StartupForm
+                            onSubmit={handleCreateStartup}
+                            onCancel={handleCancel}
+                        />
+                    </div>
+                )}
 
-            {editingStartup && (
-                <StartupForm
-                    initialData={editingStartup}
-                    onSubmit={handleUpdateStartup}
-                    onCancel={handleCancel}
-                />
-            )}
+                {editingStartup && (
+                    <div className="mb-4">
+                        <StartupForm
+                            initialData={editingStartup}
+                            onSubmit={handleUpdateStartup}
+                            onCancel={handleCancel}
+                        />
+                    </div>
+                )}
 
-            <form onSubmit={handleFilterSubmit} style={{ margin: '20px 0' }}>
-                <h3>Filtrar Startups</h3>
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Filtrar por nombre..."
-                    value={filters.name}
-                    onChange={handleFilterChange}
-                    style={{ marginRight: '10px' }}
-                />
-                <input
-                    type="text"
-                    name="category"
-                    placeholder="Filtrar por categoría..."
-                    value={filters.category}
-                    onChange={handleFilterChange}
-                    style={{ marginRight: '10px' }}
-                />
-                <button type="submit">Filtrar</button>
-                <button type="button" onClick={handleClearFilters} style={{ marginLeft: '10px' }}>
-                    Limpiar Filtros
-                </button>
-            </form>
+                {!showForm && !editingStartup && (
+                    <Card className="bg-light border-0">
+                        <Card.Body>
+                            <Form onSubmit={handleFilterSubmit}>
+                                <Row className="g-3 align-items-end">
+                                    <Col md>
+                                        <Form.Group controlId="filterName">
+                                            <Form.Label>Filtrar por nombre</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                name="name"
+                                                placeholder="Ej: Innovatech"
+                                                value={filters.name}
+                                                onChange={handleFilterChange}
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col md>
+                                        <Form.Group controlId="filterCategory">
+                                            <Form.Label>Filtrar por categoría</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                name="category"
+                                                placeholder="Ej: Fintech"
+                                                value={filters.category}
+                                                onChange={handleFilterChange}
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col md="auto" className="d-flex">
+                                        <Button variant="secondary" type="submit" className="me-2">Filtrar</Button>
+                                        <Button variant="outline-secondary" type="button" onClick={handleClearFilters}>
+                                            Limpiar
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            </Form>
+                        </Card.Body>
+                    </Card>
+                )}
+            </Container>
 
             {loading ? (
                 <div>Cargando...</div>
             ) : (
-                <ul>
+                <Row className='m-4'>
                     {startups.map(startup => (
-                        <li key={startup.id} style={{ marginBottom: '10px' }}>
-                            {startup.name} - {startup.category}
-                            <button onClick={() => setEditingStartup(startup)} style={{ marginLeft: '10px' }}>
-                                Editar
-                            </button>
-                            <button onClick={() => handleDeleteStartup(startup.id)} style={{ marginLeft: '5px' }}>
-                                Eliminar
-                            </button>
-                        </li>
+                        <Col xs={12} md={6} lg={4} key={startup.id} className="mb-4">
+                            <Card style={{ width: '100%' }} key={startup.id}>
+                                <Card.Body>
+                                    <Card.Title>{startup.name}</Card.Title>
+                                    <Card.Subtitle className="d-block text-muted"><strong>Categoría:</strong> {startup.category}</Card.Subtitle>
+                                    <Card.Text>
+                                        <strong>Ubicación:</strong> {startup.location} <br />
+                                        <strong>Fecha de Fundación:</strong> {new Date(startup.foundedat).toLocaleDateString()} <br />
+                                        <strong>Inversión Recibida:</strong> ${currencyFormatter.format(startup.fundingamount)}
+                                    </Card.Text>
+                                    <Button variant="secondary" size="sm" onClick={() => setEditingStartup(startup)}>
+                                        Editar
+                                    </Button>
+                                    <Button variant="danger" size="sm" className="ms-2" onClick={() => handleDeleteStartup(startup.id)}>
+                                        Eliminar
+                                    </Button>
+                                </Card.Body>
+                            </Card>
+                        </Col>
                     ))}
-                </ul>
+                </Row>
             )}
         </div>
     )

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import apiClient from '../services/api'
 import TechnologyForm from '../components/TechnologyForm';
+import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
+import { PlusLg } from 'react-bootstrap-icons';
 
 export default function TechnologiesPage() {
     const [technologies, setTechnologies] = useState([]);
@@ -66,7 +68,7 @@ export default function TechnologiesPage() {
                 // Hacemos la petición DELETE a la API
                 await apiClient.delete(`/technologies/delete/${id}`);
                 // Actualizamos el estado local para quitar la tecnologia eliminada
-                setTechnologies(prevtechnology => prevtechnology.filter(t => t.id  !== id));
+                setTechnologies(prevtechnology => prevtechnology.filter(t => t.id !== id));
                 setError(null);
             } catch (err) {
                 setError('Error al eliminar la startup.');
@@ -103,68 +105,108 @@ export default function TechnologiesPage() {
 
     return (
         <div>
-            <h1>Lista de technologias</h1>
-            {!showForm && (
-                <button onClick={() => setShowForm(true)}>
-                    Crear Nueva tecnologia
-                </button>
-            )}
+            <Container className="py-4">
+                <Row className="align-items-center mb-4">
+                    <Col className='my-2'>
+                        <h1 className="mb-0">Lista de Tecnologias</h1>
+                    </Col>
+                    <Col xs="auto">
+                        {/* Solo mostramos el botón si no hay un formulario activo */}
+                        {!showForm && !editingTechnology && (
+                            <Button variant="primary" onClick={() => setShowForm(true)}>
+                                <PlusLg size={20} className="me-2" />
+                                Crear Nueva Tecnología
+                            </Button>
+                        )}
+                    </Col>
+                </Row>
 
-            {showForm && (
-                <TechnologyForm
-                    onSubmit={handleCreateTechnology}
-                    onCancel={handleCancel}
-                />
-            )}
+                {showForm && (
+                    <div className="mb-4">
+                        <TechnologyForm
+                            onSubmit={handleCreateTechnology}
+                            onCancel={handleCancel}
+                            initialData={editingTechnology}
+                        />
+                    </div>
+                )}
 
-            {editingTechnology && (
-                <TechnologyForm
-                    initialData={editingTechnology}
-                    onSubmit={handleUpdateTechnology}
-                    onCancel={handleCancel}
-                />
-            )}
+                {editingTechnology && (
+                    <div className="mb-4">
+                        <TechnologyForm
+                            onSubmit={handleUpdateTechnology}
+                            onCancel={handleCancel}
+                            initialData={editingTechnology}
+                        />
+                    </div>
+                )}
 
-            <form onSubmit={handleFilterSubmit} style={{ margin: '20px 0' }}>
-                <h3>Filtrar technology</h3>
-                <input
-                    type="text"
-                    name="sector"
-                    placeholder="Filtrar por sector..."
-                    value={filters.sector}
-                    onChange={handleFilterChange}
-                    style={{ marginRight: '10px' }}
-                />
-                <input
-                    type="text"
-                    name="adoptionLevel"
-                    placeholder="Filtrar por nivel de adopción..."
-                    value={filters.adoptionLevel}
-                    onChange={handleFilterChange}
-                    style={{ marginRight: '10px' }}
-                />
-                <button type="submit">Filtrar</button>
-                <button type="button" onClick={handleClearFilters} style={{ marginLeft: '10px' }}>
-                    Limpiar Filtros
-                </button>
-            </form>
-
+                {!showForm && !editingTechnology && (
+                    <Card className="bg-light border-0">
+                        <Card.Body>
+                            <Form onSubmit={handleFilterSubmit}>
+                                <Row className="g-3 align-items-end">
+                                    <Col md>
+                                        <Form.Group controlId="filterSector">
+                                            <Form.Label>Filtrar por sector</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                name="sector"
+                                                placeholder="Ej: advanced materials"
+                                                value={filters.sector}
+                                                onChange={handleFilterChange}
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col md>
+                                        <Form.Group controlId="filterAdoptionLevel">
+                                            <Form.Label>Filtrar por Nivel de adopción </Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                name="adoptionLevel"
+                                                placeholder="Ej: Innovators"
+                                                value={filters.adoptionLevel}
+                                                onChange={handleFilterChange}
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col md="auto" className="d-flex">
+                                        <Button variant="secondary" type="submit" className="me-2">Filtrar</Button>
+                                        <Button variant="outline-secondary" type="button" onClick={handleClearFilters}>
+                                            Limpiar
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            </Form>
+                        </Card.Body>
+                    </Card>
+                )}
+            </Container>
             {loading ? (
                 <div>Cargando...</div>
             ) : (
-                <ul>
+                <Row className='m-4 '>
                     {technologies.map(technology => (
-                        <li key={technology.id} style={{ marginBottom: '10px' }}>
-                            {technology.name} - {technology.sector}
-                            <button onClick={() => setEditingTechnology(technology)} style={{ marginLeft: '10px' }}>
-                                Editar
-                            </button>
-                            <button onClick={() => handleDeleteTechnology(technology.id)} style={{ marginLeft: '5px' }}>
-                                Eliminar
-                            </button>
-                        </li>
+                        <Col xs={12} md={6} lg={4} key={technology.id} className="mb-4">
+                            <Card style={{ width: '100%' }} key={technology.id}>
+                                <Card.Body>
+                                    <Card.Title>{technology.name}</Card.Title>
+                                    <Card.Subtitle className="d-block text-muted"><strong>Sector:</strong> {technology.sector}</Card.Subtitle>
+                                    <Card.Text>
+                                        <strong>Descripción:</strong> {technology.description} <br />
+                                        <strong>Nivel de adopción:</strong> {technology.adoptionlevel}
+                                    </Card.Text>
+                                    <Button variant="secondary" size="sm" onClick={() => setEditingTechnology(technology)}>
+                                        Editar
+                                    </Button>
+                                    <Button variant="danger" size="sm" onClick={() => handleDeleteTechnology(technology.id)} style={{ marginLeft: '10px' }}>
+                                        Eliminar
+                                    </Button>
+                                </Card.Body>
+                            </Card>
+                        </Col>
                     ))}
-                </ul>
+                </Row>
             )}
         </div>
     )
