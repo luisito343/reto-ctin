@@ -84,37 +84,36 @@ El API Gateway (para probar con Postman) estará en http://localhost:8080.
 
 * **`DELETE /v1/api/technologies/delete/:id`**: Elimina una startup.
 ## 7. Pruebas Manuales
-```markdown
 ### Crear una Startup
 Se realiza una petición `POST` a `/v1/api/startups/create` con un cuerpo JSON válido. Se espera una respuesta `201 Created` con los datos de la nueva startup
-![Texto alternativo](docs/images/postman/CreateStartUp.png)
+![Texto alternativo](./docs/images/postman/CreateStartUp.png)
 ### Leer Startups
 Se realiza una petición `GET` a `/v1/api/startups/read`. Se espera una respuesta `200 OK` con una lista de todas las startups.
-![Texto alternativo](docs/images/postman/ReadStartUps.png)
+![Texto alternativo](./docs/images/postman/ReadStartUps.png)
 ### Leer Startups con Filtros
 Se realiza una petición `GET` a `/v1/api/startups/read?category=AI`. Se espera una respuesta `200 OK` con una lista de startups que coincidan con el filtro especificado.
-![Texto alternativo](docs/images/postman/ReadStartUpsWithFilters.png)
+![Texto alternativo](./docs/images/postman/ReadStartUpsWithFilters.png)
 ### Actualizamos una startup
 Se realiza una petición `PUT` a `/v1/api/startups/update/:id` con un cuerpo JSON válido para actualizar una startup existente. Se espera una respuesta `200 OK` con los datos de la startup actualizada.
-![Texto alternativo](docs/images/postman/UpdateStartUp.png)
+![Texto alternativo](./docs/images/postman/UpdateStartUp.png)
 ### Eliminamos una startup
 Se realiza una petición `DELETE` a `/v1/api/startups/delete/:id` para eliminar una startup existente. Se espera una respuesta `200 OK` con un mensaje de éxito.
-![Texto alternativo](docs/images/postman/DeleteStartUp.png)
+![Texto alternativo](./docs/images/postman/DeleteStartUp.png)
 ### Creamos una tecnología
 Se realiza una petición `POST` a `/v1/api/technologies/create` con un cuerpo JSON válido para crear una nueva tecnología. Se espera una respuesta `201 Created` con los datos de la nueva tecnología.
-![Texto alternativo](docs/images/postman/CreateTechnology.png)
+![Texto alternativo](./docs/images/postman/CreateTechnology.png)
 ### Leemos las tecnologías
 Se realiza una petición `GET` a `/v1/api/technologies/read` para obtener una lista de todas las tecnologías. Se espera una respuesta `200 OK` con una lista de todas las tecnologías.
-![Texto alternativo](docs/images/postman/ReadTechnologies.png)
+![Texto alternativo](./docs/images/postman/ReadTechnologies.png)
 ### Leemos las tecnologias por filtro
 Se realiza una petición `GET` a `/v1/api/technologies/read?adoptionLevel=Innovators` para obtener una lista de tecnologías que coincidan con el filtro especificado. Se espera una respuesta `200 OK` con una lista de tecnologías que coincidan con el filtro.
-![Texto alternativo](docs/images/postman/ReadTechnologiesWithFilters.png)
+![Texto alternativo](./docs/images/postman/ReadTechnologiesWithFilters.png)
 ### Actualizamos una tecnología
 Se realiza una petición `PUT` a `/v1/api/technologies/update/:id` con un cuerpo JSON válido para actualizar una tecnología existente. Se espera una respuesta `200 OK` con los datos de la tecnología actualizada.
-![Texto alternativo](docs/images/postman/UpdateTechnology.png)
+![Texto alternativo](./docs/images/postman/UpdateTechnology.png)
 ### Eliminamos una tecnología
 Se realiza una petición `DELETE` a `/v1/api/technologies/delete/:id` para eliminar una tecnología existente. Se espera una respuesta `200 OK` con un mensaje de éxito.
-![Texto alternativo](docs/images/postman/DeleteTechnology.png)
+![Texto alternativo](./docs/images/postman/DeleteTechnology.png)
 
 ## 8. Capturas de Pantalla
 
