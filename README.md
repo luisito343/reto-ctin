@@ -128,12 +128,25 @@ Se realiza una petición `DELETE` a `/v1/api/technologies/delete/:id` para elimi
 
 ### Escritorio (Desktop)
 ![Vista de escritorio de la aplicación](/docs/images/FrontEnd/desktop.png)
+### Escritorio (Desktop) con Filtros
+![Vista de escritorio de la aplicación con filtros](/docs/images/FrontEnd/desktopFilters.png)
+### Escritorio (Desktop) con Formulario de Creación/Actualización
+![Vista de escritorio de la aplicación con actualización](/docs/images/FrontEnd/desktopUpdate.png)
+### Escritorio (Desktop) con Errores
+![Vista de escritorio de la aplicación con errores](/docs/images/FrontEnd/desktopError.png)
+
 
 ### Tablet
 ![Vista de tablet de la aplicación](/docs/images/FrontEnd/tablet.png)
 
 ### Móvil (Smartphone)
 ![Vista de móvil de la aplicación](/docs/images/FrontEnd/mobile.png)
+### Móvil (Smartphone) con Formulario de Creación/Actualización
+![Vista de móvil de la aplicación con filtros](/docs/images/FrontEnd/mobileUpdate.png)
+### Móvil (Smartphone) No se encontro lo buscado
+![Vista de móvil de la aplicación con errores](/docs/images/FrontEnd/mobileNotFound.png)
+
+
 
 ### 9. Limitaciones y Siguientes Pasos
 ### Limitaciones Actuales:
