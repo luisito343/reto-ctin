@@ -2,6 +2,12 @@
 # El nombre (ej. "create_startup") es una variable que usaremos más abajo.
 # El "server" apunta al nombre del servicio en docker-compose y su puerto interno.
 # Define un grupo de servidores para cada microservicio.
+
+log_format  custom_log  '$remote_addr - $remote_user [$time_local] "$request" '
+                        '$status $body_bytes_sent "$http_referer" '
+                        '"$http_user_agent" "$http_x_forwarded_for" '
+                        'upstream_addr=$upstream_addr';
+
 upstream create_startup_service {
     server ${CREATE_STARTUP_URL}:443;
 }
@@ -29,7 +35,7 @@ upstream delete_technology_service {
 }
 
 server {
-    access_log /var/log/nginx/access.log combined;
+    access_log /var/log/nginx/access.log custom_log;
     listen 80;
     resolver 8.8.8.8;
 
