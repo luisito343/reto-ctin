@@ -65,7 +65,7 @@ app.get('/', async (req, res) => {
 });
 
 
-app.get('/v1/api/startups/read/:id', async (req, res) => {
+app.get('/:id', async (req, res) => {
     
     const { id } = req.params;
     try{
