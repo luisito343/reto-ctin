@@ -1,9 +1,14 @@
 server {
     listen 80;
 
+    location / {
+        return 200 'API Gateway activo';
+        add_header Content-Type text/plain;
+    }
+
     # Startups
     location /v1/api/startups/create {
-        proxy_pass https://${CREATE_STARTUP_URL};
+        proxy_pass http://${CREATE_STARTUP_URL};
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -12,7 +17,7 @@ server {
     }
 
     location /v1/api/startups/read {
-        proxy_pass https://${READ_STARTUP_URL};
+        proxy_pass http://${READ_STARTUP_URL};
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -21,7 +26,7 @@ server {
     }
 
     location /v1/api/startups/update {
-        proxy_pass https://${UPDATE_STARTUP_URL};
+        proxy_pass http://${UPDATE_STARTUP_URL};
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -30,7 +35,7 @@ server {
     }
 
     location /v1/api/startups/delete {
-        proxy_pass https://${DELETE_STARTUP_URL};
+        proxy_pass http://${DELETE_STARTUP_URL};
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -40,7 +45,7 @@ server {
 
     # Technologies
     location /v1/api/technologies/create {
-        proxy_pass https://${CREATE_TECHNOLOGY_URL};
+        proxy_pass http://${CREATE_TECHNOLOGY_URL};
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -49,7 +54,7 @@ server {
     }
 
     location /v1/api/technologies/read {
-        proxy_pass https://${READ_TECHNOLOGY_URL};
+        proxy_pass http://${READ_TECHNOLOGY_URL};
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -58,7 +63,7 @@ server {
     }
 
     location /v1/api/technologies/update {
-        proxy_pass https://${UPDATE_TECHNOLOGY_URL};
+        proxy_pass http://${UPDATE_TECHNOLOGY_URL};
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -67,7 +72,7 @@ server {
     }
 
     location /v1/api/technologies/delete {
-        proxy_pass https://${DELETE_TECHNOLOGY_URL};
+        proxy_pass http://${DELETE_TECHNOLOGY_URL};
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
