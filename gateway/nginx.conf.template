@@ -4,11 +4,11 @@ server {
     # -----------------------
     # CORS global
     # -----------------------
-    add_header 'Access-Control-Allow-Origin' '*' always;
+    add_header 'Access-Control-Allow-Origin' $http_origin always;
     add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
     add_header 'Access-Control-Allow-Headers' 'Origin, Content-Type, Accept, Authorization' always;
     add_header 'Access-Control-Allow-Credentials' 'true' always;
-    
+
     if ($request_method = OPTIONS) {
         return 204;
     }
