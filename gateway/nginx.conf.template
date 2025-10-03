@@ -29,6 +29,7 @@ upstream delete_technology_service {
 }
 
 server {
+    access_log /var/log/nginx/access.log combined;
     listen 80;
     resolver 8.8.8.8;
 
