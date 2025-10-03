@@ -30,14 +30,8 @@ app.get('/health', (req, res) => {
 });
 
 
-app.post('/v1/api/startups/create', async (req, res) => {
-    // --- AQUÍ VA TU LÓGICA ---
-    // TODO: Extraer los datos del cuerpo de la petición (req.body)
-    // TODO: Validar los datos recibidos
-    // TODO: Escribir la consulta SQL para insertar los datos
-    // TODO: Ejecutar la consulta usando el pool
-    // TODO: Enviar una respuesta de éxito (201) o de error (400, 500)
-    // --------------------------
+app.post('/', async (req, res) => {
+    
     const { name, foundedAt, location, category, fundingAmount } = req.body;
     if (!name || !foundedAt || !location || !category || !fundingAmount) {
         return res.status(400).send({ error: 'Faltan datos obligatorios' });

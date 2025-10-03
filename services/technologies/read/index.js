@@ -29,7 +29,7 @@ app.get('/health', (req, res) => {
     res.status(200).send('OK');
 });
 
-app.get('/v1/api/technologies/read', async (req, res) => {
+app.get('/', async (req, res) => {
     // 1. Extraer los posibles filtros del objeto req.query
     const { sector, adoptionLevel } = req.query;
 

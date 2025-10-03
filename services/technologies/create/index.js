@@ -30,7 +30,7 @@ app.get('/health', (req, res) => {
 });
 
 
-app.post('/v1/api/technologies/create', async (req, res) => {
+app.post('/', async (req, res) => {
     const { name, sector, description, adoptionLevel } = req.body;
     if (!name || !sector || !description || !adoptionLevel) {
         return res.status(400).send({ error: 'Faltan datos obligatorios' });

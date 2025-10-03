@@ -30,7 +30,7 @@ app.get('/health', (req, res) => {
 });
 
 
-app.put('/v1/api/technologies/update/:id', async (req, res) => {
+app.put('/', async (req, res) => {
 
     const { id } = req.params;
     const { name, sector, description, adoptionLevel } = req.body;

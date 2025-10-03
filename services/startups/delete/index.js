@@ -30,7 +30,7 @@ app.get('/health', (req, res) => {
 });
 
 
-app.delete('/v1/api/startups/delete/:id', async (req, res) => {
+app.delete('/', async (req, res) => {
 
     const { id } = req.params;
 
