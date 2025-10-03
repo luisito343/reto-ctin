@@ -1,13 +1,14 @@
 server {
     listen 80;
 
-    # Healthcheck del gateway
+    # -----------------------
+    # Healthcheck y fallback
+    # -----------------------
     location /health {
         return 200 'OK';
         add_header Content-Type text/plain;
     }
 
-    # Fallback para /
     location = / {
         return 200 'API Gateway activo';
         add_header Content-Type text/plain;
@@ -16,6 +17,8 @@ server {
     # -----------------------
     # STARTUPS
     # -----------------------
+
+    # CREATE
     location /v1/api/startups/create {
         rewrite ^/v1/api/startups/create/?(.*)$ /$1 break;
         proxy_pass https://${CREATE_STARTUP_URL}/;
@@ -27,6 +30,7 @@ server {
         proxy_cache_bypass $http_upgrade;
     }
 
+    # READ
     location /v1/api/startups/read {
         rewrite ^/v1/api/startups/read/?(.*)$ /$1 break;
         proxy_pass https://${READ_STARTUP_URL}/;
@@ -38,8 +42,9 @@ server {
         proxy_cache_bypass $http_upgrade;
     }
 
-    location /v1/api/startups/update {
-        rewrite ^/v1/api/startups/update/?(.*)$ /$1 break;
+    # UPDATE (con :id)
+    location /v1/api/startups/update/ {
+        rewrite ^/v1/api/startups/update/(.*)$ /$1 break;
         proxy_pass https://${UPDATE_STARTUP_URL}/;
         proxy_ssl_server_name on;
         proxy_http_version 1.1;
@@ -49,8 +54,9 @@ server {
         proxy_cache_bypass $http_upgrade;
     }
 
-    location /v1/api/startups/delete {
-        rewrite ^/v1/api/startups/delete/?(.*)$ /$1 break;
+    # DELETE (con :id)
+    location /v1/api/startups/delete/ {
+        rewrite ^/v1/api/startups/delete/(.*)$ /$1 break;
         proxy_pass https://${DELETE_STARTUP_URL}/;
         proxy_ssl_server_name on;
         proxy_http_version 1.1;
@@ -63,6 +69,8 @@ server {
     # -----------------------
     # TECHNOLOGIES
     # -----------------------
+
+    # CREATE
     location /v1/api/technologies/create {
         rewrite ^/v1/api/technologies/create/?(.*)$ /$1 break;
         proxy_pass https://${CREATE_TECHNOLOGY_URL}/;
@@ -74,6 +82,7 @@ server {
         proxy_cache_bypass $http_upgrade;
     }
 
+    # READ
     location /v1/api/technologies/read {
         rewrite ^/v1/api/technologies/read/?(.*)$ /$1 break;
         proxy_pass https://${READ_TECHNOLOGY_URL}/;
@@ -85,8 +94,9 @@ server {
         proxy_cache_bypass $http_upgrade;
     }
 
-    location /v1/api/technologies/update {
-        rewrite ^/v1/api/technologies/update/?(.*)$ /$1 break;
+    # UPDATE (con :id)
+    location /v1/api/technologies/update/ {
+        rewrite ^/v1/api/technologies/update/(.*)$ /$1 break;
         proxy_pass https://${UPDATE_TECHNOLOGY_URL}/;
         proxy_ssl_server_name on;
         proxy_http_version 1.1;
@@ -96,8 +106,9 @@ server {
         proxy_cache_bypass $http_upgrade;
     }
 
-    location /v1/api/technologies/delete {
-        rewrite ^/v1/api/technologies/delete/?(.*)$ /$1 break;
+    # DELETE (con :id)
+    location /v1/api/technologies/delete/ {
+        rewrite ^/v1/api/technologies/delete/(.*)$ /$1 break;
         proxy_pass https://${DELETE_TECHNOLOGY_URL}/;
         proxy_ssl_server_name on;
         proxy_http_version 1.1;
