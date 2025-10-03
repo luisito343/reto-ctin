@@ -37,9 +37,9 @@ Para levantar todo el sistema, ejecuta el siguiente comando en la raíz del proy
 docker-compose up --build
 ```
 
-El Front-End estará disponible en http://localhost:5173.
+El Front-End estará disponible en https://reto-ctin-git-main-luisito343s-projects.vercel.app/technologies.
 
-El API Gateway (para probar con Postman) estará en http://localhost:8080.
+El API Gateway (para probar con Postman) estará en https://api-gateway-anos.onrender.com.
 
 ## 6. Rutas de la API
     Startups: /startups
@@ -157,12 +157,15 @@ Migraciones de DB: No hay un servicio de migraciones automáticas. La estructura
 
 Pruebas Automatizadas: El proyecto carece de pruebas unitarias o de integración, dependiendo únicamente de las pruebas manuales.
 
+Latencia por Inactividad en el Servidor: La aplicación está desplegada en el plan gratuito de Render. Esta plataforma suspende los microservicios después de un período de inactividad para ahorrar recursos. Como consecuencia, la primera solicitud que se realiza después de dicho período puede experimentar un retraso considerable (hasta un minuto) mientras los servicios se reactivan. Esto puede dar la falsa impresión de que la aplicación no está funcionando.
+
 ### Posibles Mejoras (Siguientes Pasos):
 
-Implementar JWT: Agregar autenticación basada en JSON Web Tokens para proteger los endpoints.
+Posibles Mejoras (Siguientes Pasos)
+Implementar JWT: Agregar autenticación basada en JSON Web Tokens para proteger los endpoints y gestionar las sesiones de usuario de forma segura.
 
-Métricas y Monitoreo: Integrar un sistema como Prometheus o Grafana para monitorear la salud y el rendimiento de los servicios.
+Métricas y Monitoreo: Integrar un sistema como Prometheus o Grafana para monitorear la salud y el rendimiento de los servicios en tiempo real.
 
-CI/CD: Crear un pipeline de Integración y Despliegue Continuo para automatizar las pruebas y los despliegues.
+CI/CD: Crear un pipeline de Integración y Despliegue Continuo (usando herramientas como Jenkins o GitHub Actions) para automatizar las pruebas y los despliegues, agilizando la entrega de nuevas funcionalidades.
 
-Comunicación Asíncrona: Para operaciones más complejas, se podría implementar un bus de eventos (como RabbitMQ o Kafka) en lugar de comunicación HTTP directa.
+Comunicación Asíncrona: Para operaciones más complejas o que requieran mayor desacoplamiento, se podría implementar un bus de eventos (como RabbitMQ o Kafka) en lugar de la comunicación HTTP síncrona actual.
