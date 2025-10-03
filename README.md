@@ -143,8 +143,11 @@ Se realiza una petición `DELETE` a `/v1/api/technologies/delete/:id` para elimi
 ![Vista de móvil de la aplicación](/docs/images/FrontEnd/mobile.png)
 ### Móvil (Smartphone) con Formulario de Creación/Actualización
 ![Vista de móvil de la aplicación con filtros](/docs/images/FrontEnd/mobileUpdate.png)
+### Móvil (Smartphone) con Formulario de Creación/Actualización
+![Vista de móvil de la aplicación con filtros](/docs/images/FrontEnd/mobileCreate.png)
 ### Móvil (Smartphone) No se encontro lo buscado
 ![Vista de móvil de la aplicación con errores](/docs/images/FrontEnd/mobileNotFound.png)
+
 
 
 
