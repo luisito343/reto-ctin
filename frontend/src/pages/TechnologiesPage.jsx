@@ -21,7 +21,7 @@ export default function TechnologiesPage() {
         try {
             setLoading(true);
             // Pasamos los filtros como 'params' a axios, que los convertirá en query string
-            const response = await apiClient.get('/technologies/read', { params: filterParams });
+            const response = await apiClient.get('/v1/api/technologies/read', { params: filterParams });
             setTechnologies(response.data);
             setError(null);
         } catch (err) {
@@ -39,7 +39,7 @@ export default function TechnologiesPage() {
     const handleCreateTechnology = async (formData) => {
         try {
             // Hacemos la petición POST para crear la nueva startup
-            const response = await apiClient.post('/technologies/create', formData);
+            const response = await apiClient.post('/v1/api/technologies/create', formData);
             console.log('Datos recibidos del backend:', response.data.technology);
             console.log('Actualizando la lista de Technolgies...');
             // Añadimos la nueva startup a nuestra lista local para que se vea al instante
@@ -54,7 +54,7 @@ export default function TechnologiesPage() {
 
     const handleUpdateTechnology = async (formData) => {
         try {
-            const response = await apiClient.put(`/technologies/update/${editingTechnology.id}`, formData);
+            const response = await apiClient.put(`/v1/api/technologies/update/${editingTechnology.id}`, formData);
             // Actualizamos la lista local reemplazando el objeto viejo por el nuevo
             setTechnologies(prev => prev.map(s => s.id === editingTechnology.id ? response.data.technology : s));
             setEditingTechnology(null); // Cerramos el formulario de edición
@@ -70,7 +70,7 @@ export default function TechnologiesPage() {
         if (window.confirm('¿Estás seguro de que quieres eliminar esta Tecnologia?')) {
             try {
                 // Hacemos la petición DELETE a la API
-                await apiClient.delete(`/technologies/delete/${id}`);
+                await apiClient.delete(`/v1/api/technologies/delete/${id}`);
                 // Actualizamos el estado local para quitar la tecnologia eliminada
                 setTechnologies(prevtechnology => prevtechnology.filter(t => t.id !== id));
                 setError(null);
