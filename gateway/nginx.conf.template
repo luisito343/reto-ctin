@@ -34,29 +34,45 @@ server {
 
     # Rutas para Startups
     location /v1/api/startups/create {
+        proxy_ssl_server_name on;
+        proxy_ssl_name        create-startup-service.onrender.com;
         proxy_pass https://create_startup_service; 
     }
     location /v1/api/startups/read {
+        proxy_ssl_server_name on;
+        proxy_ssl_name        read-startup-service.onrender.com;
         proxy_pass https://read_startup_service;
     }
     location /v1/api/startups/update {
+        proxy_ssl_server_name on;
+        proxy_ssl_name        update-startup-service.onrender.com;
         proxy_pass https://update_startup_service;
     }
     location /v1/api/startups/delete {
+        proxy_ssl_server_name on;
+        proxy_ssl_name        delete-startup-service.onrender.com;
         proxy_pass https://delete_startup_service;
     }
 
     # Rutas para Technologies
     location /v1/api/technologies/create {
+        proxy_ssl_server_name on;
+        proxy_ssl_name        create-technology-service.onrender.com;
         proxy_pass https://create_technology_service;
     }
     location /v1/api/technologies/read {
+        proxy_ssl_server_name on;
+        proxy_ssl_name        read-technology-service.onrender.com;
         proxy_pass https://read_technology_service;
     }
     location /v1/api/technologies/update {
+        proxy_ssl_server_name on;
+        proxy_ssl_name        update-technology-service.onrender.com;
         proxy_pass https://update_technology_service;
     }
     location /v1/api/technologies/delete {
+        proxy_ssl_server_name on;
+        proxy_ssl_name        delete-technology-service.onrender.com;
         proxy_pass https://delete_technology_service;
     }
 }
