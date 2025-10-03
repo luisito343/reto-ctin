@@ -2,92 +2,55 @@
 # El nombre (ej. "create_startup") es una variable que usaremos más abajo.
 # El "server" apunta al nombre del servicio en docker-compose y su puerto interno.
 # Define un grupo de servidores para cada microservicio.
+# nginx.conf.template (Versión Final para Plan Gratuito)
 
-log_format  custom_log  '$remote_addr - $remote_user [$time_local] "$request" '
-                        '$status $body_bytes_sent "$http_referer" '
-                        '"$http_user_agent" "$http_x_forwarded_for" '
-                        'upstream_addr=$upstream_addr';
-
-upstream create_startup_service {
-    server ${CREATE_STARTUP_URL}:443;
-}
-upstream read_startup_service {
-    server ${READ_STARTUP_URL}:443;
-}
-upstream update_startup_service {
-    server ${UPDATE_STARTUP_URL}:443;
-}
-upstream delete_startup_service {
-    server ${DELETE_STARTUP_URL}:443;
-}
-
-upstream create_technology_service {
-    server ${CREATE_TECHNOLOGY_URL}:443;
-}
-upstream read_technology_service {
-    server ${READ_TECHNOLOGY_URL}:443;
-}
-upstream update_technology_service {
-    server ${UPDATE_TECHNOLOGY_URL}:443;
-}
-upstream delete_technology_service {
-    server ${DELETE_TECHNOLOGY_URL}:443;
-}
+# No necesitamos un formato de log especial
+# No necesitamos definir upstreams por separado
 
 server {
-    access_log /var/log/nginx/access.log custom_log;
     listen 80;
-    resolver 8.8.8.8;
 
     # Rutas para Startups
     location /v1/api/startups/create {
         proxy_set_header      Host $host;
         proxy_ssl_server_name on;
-        proxy_ssl_name        create-startup-service.onrender.com;
-        proxy_pass https://create_startup_service; 
+        proxy_pass            https://create-startup-service.onrender.com; 
     }
     location /v1/api/startups/read {
         proxy_set_header      Host $host;
         proxy_ssl_server_name on;
-        proxy_ssl_name        read-startup-service.onrender.com;
-        proxy_pass https://read_startup_service;
+        proxy_pass            https://read-startup-service.onrender.com;
     }
     location /v1/api/startups/update {
         proxy_set_header      Host $host;
         proxy_ssl_server_name on;
-        proxy_ssl_name        update-startup-service.onrender.com;
-        proxy_pass https://update_startup_service;
+        proxy_pass            https://update-startup-service.onrender.com;
     }
     location /v1/api/startups/delete {
         proxy_set_header      Host $host;
         proxy_ssl_server_name on;
-        proxy_ssl_name        delete-startup-service.onrender.com;
-        proxy_pass https://delete_startup_service;
+        proxy_pass            https://delete-startup-service.onrender.com;
     }
 
     # Rutas para Technologies
     location /v1/api/technologies/create {
         proxy_set_header      Host $host;
         proxy_ssl_server_name on;
-        proxy_ssl_name        create-technology-service.onrender.com;
-        proxy_pass https://create_technology_service;
+        proxy_pass            https://create-technology-service.onrender.com;
     }
     location /v1/api/technologies/read {
         proxy_set_header      Host $host;
         proxy_ssl_server_name on;
-        proxy_ssl_name        read-technology-service.onrender.com;
-        proxy_pass https://read_technology_service;
+        proxy_pass            https://read-technology-service.onrender.com;
     }
     location /v1/api/technologies/update {
         proxy_set_header      Host $host;
         proxy_ssl_server_name on;
-        proxy_ssl_name        update-technology-service.onrender.com;
-        proxy_pass https://update_technology_service;
+        proxy_pass            https://update-technology-service.onrender.com;
     }
     location /v1/api/technologies/delete {
         proxy_set_header      Host $host;
         proxy_ssl_server_name on;
-        proxy_ssl_name        delete-technology-service.onrender.com;
-        proxy_pass https://delete_technology_service;
+        proxy_pass            https://delete-technology-service.onrender.com;
     }
 }
