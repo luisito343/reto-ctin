@@ -2,29 +2,29 @@
 # El nombre (ej. "create_startup") es una variable que usaremos más abajo.
 # El "server" apunta al nombre del servicio en docker-compose y su puerto interno.
 # Define un grupo de servidores para cada microservicio.
-upstream create_startup {
+upstream create_startup_service {
     server ${CREATE_STARTUP_URL};
 }
-upstream read_startup {
+upstream read_startup_service {
     server ${READ_STARTUP_URL};
 }
-upstream update_startup {
+upstream update_startup_service {
     server ${UPDATE_STARTUP_URL};
 }
-upstream delete_startup {
+upstream delete_startup_service {
     server ${DELETE_STARTUP_URL};
 }
 
-upstream create_technology {
+upstream create_technology_service {
     server ${CREATE_TECHNOLOGY_URL};
 }
-upstream read_technology {
+upstream read_technology_service {
     server ${READ_TECHNOLOGY_URL};
 }
-upstream update_technology {
+upstream update_technology_service {
     server ${UPDATE_TECHNOLOGY_URL};
 }
-upstream delete_technology {
+upstream delete_technology_service {
     server ${DELETE_TECHNOLOGY_URL};
 }
 
@@ -34,29 +34,29 @@ server {
 
     # Rutas para Startups
     location /v1/api/startups/create {
-        proxy_pass http://create_startup_service; 
+        proxy_pass https://create_startup_service; 
     }
     location /v1/api/startups/read {
-        proxy_pass http://read_startup_service;
+        proxy_pass https://read_startup_service;
     }
     location /v1/api/startups/update {
-        proxy_pass http://update_startup_service;
+        proxy_pass https://update_startup_service;
     }
     location /v1/api/startups/delete {
-        proxy_pass http://delete_startup_service;
+        proxy_pass https://delete_startup_service;
     }
 
     # Rutas para Technologies
     location /v1/api/technologies/create {
-        proxy_pass http://create_technology_service;
+        proxy_pass https://create_technology_service;
     }
     location /v1/api/technologies/read {
-        proxy_pass http://read_technology_service;
+        proxy_pass https://read_technology_service;
     }
     location /v1/api/technologies/update {
-        proxy_pass http://update_technology_service;
+        proxy_pass https://update_technology_service;
     }
     location /v1/api/technologies/delete {
-        proxy_pass http://delete_technology_service;
+        proxy_pass https://delete_technology_service;
     }
 }
