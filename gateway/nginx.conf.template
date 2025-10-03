@@ -3,29 +3,29 @@
 # El "server" apunta al nombre del servicio en docker-compose y su puerto interno.
 # Define un grupo de servidores para cada microservicio.
 upstream create_startup_service {
-    server ${CREATE_STARTUP_URL};
+    server ${CREATE_STARTUP_URL}:443;
 }
 upstream read_startup_service {
-    server ${READ_STARTUP_URL};
+    server ${READ_STARTUP_URL}:443;
 }
 upstream update_startup_service {
-    server ${UPDATE_STARTUP_URL};
+    server ${UPDATE_STARTUP_URL}:443;
 }
 upstream delete_startup_service {
-    server ${DELETE_STARTUP_URL};
+    server ${DELETE_STARTUP_URL}:443;
 }
 
 upstream create_technology_service {
-    server ${CREATE_TECHNOLOGY_URL};
+    server ${CREATE_TECHNOLOGY_URL}:443;
 }
 upstream read_technology_service {
-    server ${READ_TECHNOLOGY_URL};
+    server ${READ_TECHNOLOGY_URL}:443;
 }
 upstream update_technology_service {
-    server ${UPDATE_TECHNOLOGY_URL};
+    server ${UPDATE_TECHNOLOGY_URL}:443;
 }
 upstream delete_technology_service {
-    server ${DELETE_TECHNOLOGY_URL};
+    server ${DELETE_TECHNOLOGY_URL}:443;
 }
 
 server {
