@@ -1,16 +1,15 @@
-# Usar la imagen oficial de Nginx como base
-# Usar la imagen oficial de Nginx
-FROM nginx:stable-alpine
+FROM nginx:1.23-alpine
 
-# Eliminar la configuración por defecto
-RUN rm /etc/nginx/conf.d/default.conf
+# Instalar gettext para usar envsubst
+RUN apk add --no-cache gettext
 
-# Copiar nuestro template y el script de inicio
+# Copiar config y script
 COPY nginx.conf.template /etc/nginx/nginx.conf.template
 COPY start.sh /start.sh
-
-# Dar permisos de ejecución al script
 RUN chmod +x /start.sh
 
-# Comando que se ejecutará cuando el contenedor inicie
+# Exponer el puerto de Nginx
+EXPOSE 80
+
+# Comando de arranque
 CMD ["/start.sh"]
