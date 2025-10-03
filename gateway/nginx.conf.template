@@ -34,29 +34,29 @@ server {
 
     # Rutas para Startups
     location /v1/api/startups/create {
-        proxy_pass http://create_startup; 
+        proxy_pass http://create_startup_service; 
     }
     location /v1/api/startups/read {
-        proxy_pass http://read_startup;
+        proxy_pass http://read_startup_service;
     }
     location /v1/api/startups/update {
-        proxy_pass http://update_startup;
+        proxy_pass http://update_startup_service;
     }
     location /v1/api/startups/delete {
-        proxy_pass http://delete_startup;
+        proxy_pass http://delete_startup_service;
     }
 
     # Rutas para Technologies
     location /v1/api/technologies/create {
-        proxy_pass http://create_technology;
+        proxy_pass http://create_technology_service;
     }
     location /v1/api/technologies/read {
-        proxy_pass http://read_technology;
+        proxy_pass http://read_technology_service;
     }
     location /v1/api/technologies/update {
-        proxy_pass http://update_technology;
+        proxy_pass http://update_technology_service;
     }
     location /v1/api/technologies/delete {
-        proxy_pass http://delete_technology;
+        proxy_pass http://delete_technology_service;
     }
 }

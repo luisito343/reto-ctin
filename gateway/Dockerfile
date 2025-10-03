@@ -1,11 +1,16 @@
 # Usar la imagen oficial de Nginx como base
-FROM nginx:alpine
+# Usar la imagen oficial de Nginx
+FROM nginx:stable-alpine
 
-COPY nginx.conf /etc/nginx/templates/default.conf.template
+# Eliminar la configuración por defecto
+RUN rm /etc/nginx/conf.d/default.conf
 
-RUN apk add --no-cache gettext
+# Copiar nuestro template y el script de inicio
+COPY nginx.conf.template /etc/nginx/nginx.conf.template
+COPY start.sh /start.sh
 
-# El comando que se ejecutará al iniciar el contenedor.
-# 1. Usa 'envsubst' para leer tu plantilla, reemplazar las variables y crear el archivo final.
-# 2. Luego, arranca Nginx en modo 'daemon off' (para que el contenedor no se cierre).
-CMD /bin/sh -c "envsubst < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+# Dar permisos de ejecución al script
+RUN chmod +x /start.sh
+
+# Comando que se ejecutará cuando el contenedor inicie
+CMD ["/start.sh"]
