@@ -1,14 +1,14 @@
 server {
     listen 80;
 
-    # 🟢 Healthcheck del gateway
+    # Healthcheck del gateway
     location /health {
         return 200 'OK';
         add_header Content-Type text/plain;
     }
 
-    # 🟢 Fallback para / (evita error 404 en raíz)
-    location / {
+    # Fallback para / (evita 404 en raíz)
+    location = / {
         return 200 'API Gateway activo';
         add_header Content-Type text/plain;
     }
