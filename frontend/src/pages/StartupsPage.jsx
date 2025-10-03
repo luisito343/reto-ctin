@@ -19,7 +19,7 @@ export default function StarupsPage() {
         try {
             setLoading(true);
             // Pasamos los filtros como 'params' a axios, que los convertirá en query string
-            const response = await apiClient.get('/startups/read', { params: filterParams });
+            const response = await apiClient.get('/v1/api/startups/read', { params: filterParams });
             setStartups(response.data);
             setError(null);
         } catch (err) {
@@ -37,7 +37,7 @@ export default function StarupsPage() {
     const handleCreateStartup = async (formData) => {
         try {
             // Hacemos la petición POST para crear la nueva startup
-            const response = await apiClient.post('/startups/create', formData);
+            const response = await apiClient.post('/v1/api/startups/create', formData);
             console.log('Datos recibidos del backend:', response.data);
             console.log('Actualizando la lista de startups...');
             // Añadimos la nueva startup a nuestra lista local para que se vea al instante
@@ -52,7 +52,7 @@ export default function StarupsPage() {
 
     const handleUpdateStartup = async (formData) => {
         try {
-            const response = await apiClient.put(`/startups/update/${editingStartup.id}`, formData);
+            const response = await apiClient.put(`/v1/api/startups/update/${editingStartup.id}`, formData);
             // Actualizamos la lista local reemplazando el objeto viejo por el nuevo
             setStartups(prev => prev.map(s => s.id === editingStartup.id ? response.data.startup : s));
             setEditingStartup(null); // Cerramos el formulario de edición
@@ -68,7 +68,7 @@ export default function StarupsPage() {
         if (window.confirm('¿Estás seguro de que quieres eliminar esta startup?')) {
             try {
                 // Hacemos la petición DELETE a la API
-                await apiClient.delete(`/startups/delete/${id}`);
+                await apiClient.delete(`/v1/api/startups/delete/${id}`);
                 // Actualizamos el estado local para quitar la startup eliminada
                 setStartups(prevStartups => prevStartups.filter(s => s.id !== id));
                 setError(null);
